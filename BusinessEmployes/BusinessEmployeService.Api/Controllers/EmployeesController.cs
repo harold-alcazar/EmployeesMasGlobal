@@ -17,7 +17,7 @@ namespace BusinessEmployeService.Api.Controllers
         }
 
         // GET: api/Employess
-        [HttpGet("api/GetEmployees")]
+        [HttpGet("GetEmployees")]
         public async Task<IList<EmployeeDtoBase>> GetEmployees()
         {
             return await _employeeService.GetEmployees().ConfigureAwait(false);
@@ -25,7 +25,7 @@ namespace BusinessEmployeService.Api.Controllers
 
         //// GET: api/GetEmployeeById/{0}
         //[HttpGet(Name = "api/GetEmployeeById/{0}")]
-        [HttpGet("api/GetEmployeeById/{id}")]
+        [HttpGet("GetEmployeeById/{id}")]
         public async Task<IList<EmployeeDtoBase>> GetEmployeeById(int id)
         {
             return await _employeeService.GetEmployeeById(id).ConfigureAwait(false);

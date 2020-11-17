@@ -11,7 +11,7 @@
         public double HourlySalary { get; set; }
         public double MonthlySalary { get; set; }
 
-        public double SalaryAmmount { get; set; }
+        public double AnnualSalary { get; set; }
 
     }
 }

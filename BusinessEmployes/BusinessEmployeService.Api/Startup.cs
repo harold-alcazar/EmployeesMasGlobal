@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using AutoMapper;
-using BusinessEmployeService.Core;
-using BusinessEmployeService.Domain.Helpers;
+using BusinessEmployeService.Core.Interfaces;
+using BusinessEmployeService.Core.Services;
 using BusinessEmployeService.Domain;
+using BusinessEmployeService.Domain.Helpers;
+using BusinessEmployeService.Domain.IRepository;
+using BusinessEmployeService.Domain.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +15,6 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Net.Http;
-using BusinessEmployeService.Core.Services;
-using BusinessEmployeService.Core.Interfaces;
-using BusinessEmployeService.Domain.Repository;
-using BusinessEmployeService.Domain.IRepository;
 
 namespace BusinessEmployeService.Api
 {
@@ -40,6 +38,11 @@ namespace BusinessEmployeService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().WithExposedHeaders());
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
@@ -73,6 +76,7 @@ namespace BusinessEmployeService.Api
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAll");
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -85,10 +89,6 @@ namespace BusinessEmployeService.Api
         {
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            var mapperConfiguration = new MapperConfiguration(configurationExpresion =>
-            {
-                configurationExpresion.AddProfile(new MappingProfile());
-            });
 
             builder.RegisterInstance(new HttpClient());
             builder.Register(c => ConfigurationRoot).As<IConfigurationRoot>();
@@ -96,19 +96,11 @@ namespace BusinessEmployeService.Api
 
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
 
-            builder.Register(componentContext => mapperConfiguration.CreateMapper()).As<IMapper>();
-
-
-            //Repository
-            // RegisterRepository(builder);
-
             ConfigService(builder, JsonConfig);
         }
 
         private static void ConfigService(ContainerBuilder builder, IConfiguration JsonConfig)
         {
-            //builder.RegisterType<PlateService>().As<IPlateService>();
-
             builder.RegisterType<HttpClientAdapter>().As<IHttpClient>();
             builder.RegisterType<ConfigProvider>().As<IConfigProvider>();
             builder.RegisterType<EmployeeService>().As<IEmployeeService>();

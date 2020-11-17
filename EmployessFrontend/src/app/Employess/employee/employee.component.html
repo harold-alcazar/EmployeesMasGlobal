@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title">
+        <h2>Api Employees</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <label>Employee id</label>
+    </div>
+    <div class="col-3">
+      <input #employeeId type="number" id="employeeId">
+    </div>
+    <div class="col-6">
+      <button id="getEmployee" (click)="employeeSubmit(employeeId.value)">Get employees</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 fontBold" *ngIf="employess?.length == 0">
+      The employee not exist
+    </div>
+  </div>
+  <div class="row margintop20">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Contract Type Name</th>
+              <th>Role Id</th>
+              <th>Role Name</th>
+              <th>Role Description</th>
+              <th>Hourly Salary</th>
+              <th>Monthly Salary</th>
+              <th>Annual Salary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of employess">
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.contractTypeName}}</td>
+              <td>{{item.roleId }}</td>
+              <td>{{item.roleName }}</td>
+              <td>{{item.roleDescription }}</td>
+              <td>{{item.hourlySalary | currency }}</td>
+              <td>{{item.monthlySalary | currency}}</td>
+              <td>{{item.annualSalary | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
