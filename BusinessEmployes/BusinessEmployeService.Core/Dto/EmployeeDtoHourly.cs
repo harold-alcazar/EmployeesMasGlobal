@@ -17,10 +17,10 @@ namespace BusinessEmployeService.Core.Dto
             RoleDescription = employee.RoleDescription;
             HourlySalary = employee.HourlySalary;
             MonthlySalary = employee.MonthlySalary;
-            SalaryAmmount = CalculateSalaryAmmount();
+            AnnualSalary = CalculateAnnualSalary();
         }
 
-        public double CalculateSalaryAmmount()
+        public double CalculateAnnualSalary()
         {
             return 120 * HourlySalary * 12;
         }

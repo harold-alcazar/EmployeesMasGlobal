@@ -6,6 +6,6 @@ namespace BusinessEmployeService.Core.Interfaces
 {
     public interface IEmployeeDto
     {
-        double CalculateSalaryAmmount();
+        double CalculateAnnualSalary();
     }
 }

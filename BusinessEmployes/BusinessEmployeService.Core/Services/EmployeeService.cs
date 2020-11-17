@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BusinessEmployeService.Core.Dto;
+﻿using BusinessEmployeService.Core.Dto;
 using BusinessEmployeService.Core.Interfaces;
 using BusinessEmployeService.Domain.IRepository;
 using System;
@@ -14,7 +13,7 @@ namespace BusinessEmployeService.Core.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IEmployeeFactory _employeeFactory;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper, IEmployeeFactory employeeFactory)
+        public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeFactory employeeFactory)
         {
             _employeeRepository = employeeRepository;
             _employeeFactory = employeeFactory;
